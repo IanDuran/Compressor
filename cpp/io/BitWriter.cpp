@@ -3,7 +3,6 @@
 //
 
 #include <fstream>
-#include <iostream>
 #include "../../header/io/BitWriter.h"
 
 BitWriter::BitWriter(bool debugMode = false, string route = "") {
@@ -47,7 +46,6 @@ void BitWriter::writeNormalMode(string bits) {
             }
             it--;
         }
-        std::cout << (int)currByte << endl;
         output << currByte;
     }
 }
