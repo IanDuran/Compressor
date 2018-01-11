@@ -27,6 +27,7 @@ void BitWriter::writeDebugMode(string bits) {
 
 void BitWriter::writeNormalMode(string bits) {
     ofstream output(route, ofstream::out | ofstream::trunc | ofstream::binary);
+    output <<  bits.size() % 8;
     for(string::iterator it = bits.begin(); it != bits.end(); it++){
         unsigned char currByte = 0;
         for(int i = 0; i < 8, it != bits.end(); i++, it++){

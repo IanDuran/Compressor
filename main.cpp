@@ -3,6 +3,6 @@
 #include "header/io/BitWriter.h"
 int main() {
     BitWriter bw(false, "C:\\Users\\Ian\\CLionProjects\\Compressor\\CompressionOutput\\Output.txt");
-    bw.writeBits("01000001");
+    bw.writeBits("100");
     return 0;
 }
