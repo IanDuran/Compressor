@@ -22,6 +22,7 @@ void BitWriter::writeDebugMode(string bits) {
     for (string::iterator it = bits.begin(); it != bits.end(); it++) {
         output << *it;
     }
+    output.close();
 }
 
 void BitWriter::writeNormalMode(string bits) {
@@ -48,6 +49,7 @@ void BitWriter::writeNormalMode(string bits) {
         }
         output << currByte;
     }
+    output.close();
 }
 
 

@@ -1,8 +1,10 @@
 #include <iostream>
 #include "header/structure/PriorityQueue.h"
 #include "header/io/BitWriter.h"
+#include "header/io/FileManager.h"
 int main() {
-    BitWriter bw(false, "C:\\Users\\Ian\\CLionProjects\\Compressor\\CompressionOutput\\Output.txt");
-    bw.writeBits("100");
+    FileManager fm;
+    int size;
+    fm.readFile("C:\\Users\\Ian\\Dropbox\\Trabajos\\Redes\\Server.py", &size);
     return 0;
 }
