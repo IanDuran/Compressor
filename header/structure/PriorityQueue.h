@@ -39,7 +39,7 @@ PriorityQueue<T>::PriorityQueue(){
 
 template <class T>
 PriorityQueue<T>::~PriorityQueue() {
-    delete queue;
+    delete this->queue;
 }
 
 template <class T>
@@ -64,15 +64,17 @@ void PriorityQueue<T>::enqueue(T* value, int priority){
             currIndex = (currIndex/2);
         }
     }
-
 }
 
 template <class T>
 T* PriorityQueue<T>::dequeue() {
-    this->exchange(0, size - 1);
-    T* toReturn = this->queue[size]->value;
-    size--;
-    this->sift();
+    T* toReturn = 0;
+    if(this->size > 0) {
+        this->exchange(0, size - 1);
+        toReturn = this->queue[size]->value;
+        size--;
+        this->sift();
+    }
     return toReturn;
 }
 
@@ -103,10 +105,11 @@ void PriorityQueue<T>::sift() {
 
 template<class T>
 void PriorityQueue<T>::enlarge(){
-    Node<T>* newQueue[arraySize + ENLARGING_SIZE];
-    for(int i = 0; i < arraySize; i++){
-        newQueue[i] = queue[i];
+    Node<T>* newQueue[this->arraySize + this->ENLARGING_SIZE];
+    for(int i = 0; i < this->arraySize; i++){
+        newQueue[i] = this->queue[i];
     }
-    *queue = *newQueue;
+    *this->queue = *newQueue;
+    this->arraySize += this->ENLARGING_SIZE;
 }
 #endif //COMPRESSOR_PRIORITYQUEUE_H
