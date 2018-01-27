@@ -81,7 +81,7 @@ void HuffTree<T>::storeCodes(std::map<std::string, T *> *codeMap) {
 }
 
 template<class T>
-void HuffTree<T>::storeCodes(TreeNode * currentNode, std::string currentCode, std::map<std::string, T *> *codeMap) {
+void HuffTree<T>::storeCodes(TreeNode *currentNode, std::string currentCode, std::map<std::string, T *> *codeMap) {
     if(currentNode->rightChild == 0 && currentNode->leftChild == 0){
         codeMap->insert(std::pair<std::string, T*>(currentCode, currentNode->value));
     }else{

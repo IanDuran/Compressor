@@ -16,11 +16,12 @@ char *FileManager::readFile(std::string route, int* size) {
     end = input.tellg();
     *size = (int)(end - begin);
 
-    //Repositioning cursor
+    //Repositioning cursor to the beginning
     input.seekg(0, std::ifstream::beg);
 
     //Reading bytes
-    char* fileBytes = new char[*size];
+    auto* fileBytes = new char[*size + 1];
+    fileBytes[*size] = '\0';
     input.read(fileBytes, *size);
     input.close();
     return fileBytes;
