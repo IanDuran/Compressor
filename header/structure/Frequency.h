@@ -15,15 +15,13 @@ public:
     explicit Frequency(int);
     int getFrequency();
     char getCharacter();
-    friend bool operator < (const Frequency &, const Frequency &);
-    friend bool operator >= (const Frequency &, const Frequency &);
+    friend bool operator < (const Frequency &thisFrequency, const Frequency &otherFrequency){
+        return thisFrequency.frequency < otherFrequency.frequency;
+    };
+    friend bool operator >= (const Frequency &thisFrequency, const Frequency &otherFrequency){
+        return thisFrequency.frequency >= otherFrequency.frequency;
+    };
 };
 
-bool operator < (const Frequency &thisFrequency, const Frequency &otherFrequency){
-    return thisFrequency.frequency < otherFrequency.frequency;
-}
 
-bool operator >= (const Frequency &thisFrequency, const Frequency &otherFrequency){
-    return thisFrequency.frequency >= otherFrequency.frequency;
-}
 #endif //COMPRESSOR_FREQUENCY_H

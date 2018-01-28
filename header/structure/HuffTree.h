@@ -23,7 +23,7 @@ private:
     TreeNode<T>* root;
     int size;
     void deleteNode(TreeNode<T>*);
-    void storeCodes(TreeNode*, std::string,std::map<std::string, T*>*);
+    void storeCodes(TreeNode<T>*, std::string,std::map<std::string, T*>*);
 public:
     explicit HuffTree(T*);
     HuffTree(T*, HuffTree<T>*, HuffTree<T>*);
@@ -34,8 +34,9 @@ public:
 };
 
 template<class T>
-HuffTree<T>::HuffTree(T *root) {
-    this->root = root;
+HuffTree<T>::HuffTree(T *rootValue) {
+    this->root = new TreeNode<T>();
+    this->root->value = rootValue;
 }
 
 template<class T>
@@ -81,7 +82,7 @@ void HuffTree<T>::storeCodes(std::map<std::string, T *> *codeMap) {
 }
 
 template<class T>
-void HuffTree<T>::storeCodes(TreeNode *currentNode, std::string currentCode, std::map<std::string, T *> *codeMap) {
+void HuffTree<T>::storeCodes(TreeNode<T> *currentNode, std::string currentCode, std::map<std::string, T *> *codeMap) {
     if(currentNode->rightChild == 0 && currentNode->leftChild == 0){
         codeMap->insert(std::pair<std::string, T*>(currentCode, currentNode->value));
     }else{

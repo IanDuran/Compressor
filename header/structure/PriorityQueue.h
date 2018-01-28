@@ -14,7 +14,7 @@ struct Node{
 template <class T>
 class PriorityQueue{
 private:
-    Node<T>* queue[10];
+    Node<T>* queue[100];
     int size;
     int arraySize;
     const int ENLARGING_SIZE = 10;
@@ -34,12 +34,12 @@ public:
 template <class T>
 PriorityQueue<T>::PriorityQueue(){
     this->size = 0;
-    this->arraySize = 10;
+    this->arraySize = 100;
 }
 
 template <class T>
 PriorityQueue<T>::~PriorityQueue() {
-    delete this->queue;
+    //delete this->queue;
 }
 
 template <class T>
@@ -71,7 +71,7 @@ T* PriorityQueue<T>::dequeue() {
     T* toReturn = 0;
     if(this->size > 0) {
         this->exchange(0, size - 1);
-        toReturn = this->queue[size]->value;
+        toReturn = this->queue[size - 1]->value;
         size--;
         this->sift();
     }
@@ -105,11 +105,16 @@ void PriorityQueue<T>::sift() {
 
 template<class T>
 void PriorityQueue<T>::enlarge(){
-    Node<T>* newQueue[this->arraySize + this->ENLARGING_SIZE];
+
+    //Segmentation Fault because of this function
+
+    Node<T>* newQueue = new Node<T>[this->arraySize + this->ENLARGING_SIZE];
+    //Node<T>* newQueue[this->arraySize + this->ENLARGING_SIZE];
     for(int i = 0; i < this->arraySize; i++){
-        newQueue[i] = this->queue[i];
+        newQueue[i] = *this->queue[i];
     }
-    *this->queue = *newQueue;
+    //delete[] this->queue;
+    *this->queue = newQueue;
     this->arraySize += this->ENLARGING_SIZE;
 }
 #endif //COMPRESSOR_PRIORITYQUEUE_H

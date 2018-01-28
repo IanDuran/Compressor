@@ -3,6 +3,8 @@
 #include "header/structure/PriorityQueue.h"
 #include "header/io/BitWriter.h"
 #include "header/io/FileManager.h"
+#include "header/structure/HuffTree.h"
+#include "header/structure/Frequency.h"
 
 int* getFrequencies(std::string bytes){
     auto* frequencies = new int[256];
@@ -16,19 +18,38 @@ int* getFrequencies(std::string bytes){
     return frequencies;
 }
 
+HuffTree<Frequency>* makeTree(int* frequencies){
+    PriorityQueue<HuffTree<Frequency>> queue;
+
+    //Generating initial list of Huffman Trees
+    for(int i = 0; i < 256; i++){
+        if(frequencies[i] > 0) {
+            Frequency *frequency = new Frequency((char) i, frequencies[i]);
+            HuffTree<Frequency> *huffTree = new HuffTree<Frequency>(frequency);
+            queue.enqueue(huffTree, frequencies[i]);
+        }
+    }
+
+    //Generating main Huffman Tree
+    while(queue.getSize() > 1){
+        HuffTree<Frequency>* firstTree = queue.dequeue();
+        if(queue.getSize() > 0){
+            HuffTree<Frequency>* secondTree = queue.dequeue();
+            HuffTree<Frequency>* newTree = new HuffTree<Frequency>(new Frequency(firstTree->getRoot()->value->getFrequency() + secondTree->getRoot()->value->getFrequency()), firstTree, secondTree);
+            queue.enqueue(newTree, newTree->getRoot()->value->getFrequency());
+        }
+    }
+    return queue.dequeue();
+}
+
 int main() {
     FileManager fm;
     int size;
     std::string content = fm.readFile("C:\\Users\\Ian\\Dropbox\\Trabajos\\Redes\\Server.py", &size);
     int total = 0;
     int* frequencies = getFrequencies(content);
-    for (int i = 0; i < 256; ++i) {
-        if(frequencies[i] != 0) {
-            std::cout << (char) i << ": " << frequencies[i] << endl;
-            total+= frequencies[i];
-        }
-    }
 
-    std::cout << "Size should be " << size << ": " << total << std::endl;
+    makeTree(frequencies);
+
     return 0;
 }
