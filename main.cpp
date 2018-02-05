@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <string>
 #include "header/structure/PriorityQueue.h"
 #include "header/io/BitWriter.h"
@@ -46,10 +47,19 @@ int main() {
     FileManager fm;
     int size;
     std::string content = fm.readFile("C:\\Users\\Ian\\Dropbox\\Trabajos\\Redes\\Server.py", &size);
-    int total = 0;
     int* frequencies = getFrequencies(content);
+    HuffTree<Frequency> *mainTree = makeTree(frequencies);
+    std::map<std::string, Frequency*> *freqMap = new std::map<std::string, Frequency*>();
+    mainTree->storeCodes(freqMap);
 
-    makeTree(frequencies);
+    std::map<char, std::string> *codeMap = new std::map<char, std::string>();
+
+    for(std::map<std::string, Frequency*>::iterator it = freqMap->begin(); it != freqMap->end(); it++){
+        codeMap->insert(std::pair<char, std::string>(it->second->getCharacter(), it->first));
+    }
+
+    delete freqMap;
+
 
     return 0;
 }
