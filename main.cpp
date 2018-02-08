@@ -44,6 +44,7 @@ HuffTree<Frequency>* makeTree(int* frequencies){
 }
 
 int main() {
+
     FileManager fm;
     int size;
     std::string content = fm.readFile("C:\\Users\\Ian\\Dropbox\\Trabajos\\Redes\\Server.py", &size);
@@ -58,7 +59,13 @@ int main() {
         codeMap->insert(std::pair<char, std::string>(it->second->getCharacter(), it->first));
     }
 
-    delete freqMap;
+    std::string compressedContent = "";
+    for(int i = 0; i < content.size(); i++){
+        compressedContent += codeMap->find(content[i])->second;
+    }
+
+
+    //delete freqMap;
 
 
     return 0;
